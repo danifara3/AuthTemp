@@ -18,6 +18,7 @@ interface User {
 }
 
 export const AuthOptions: NextAuthOptions = {
+  // secret: process.env.NEXTAUTH_SECRET,
   session: { strategy: "jwt" },
   pages:{
     signIn:'/loginsignup',
@@ -74,7 +75,6 @@ export const AuthOptions: NextAuthOptions = {
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
 };
 
 const handler = NextAuth(AuthOptions);
