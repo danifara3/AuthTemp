@@ -1,6 +1,7 @@
 import { signIn } from "next-auth/react";
 import prisma from "../../../prisma/prismaUtil";
 import { redirect } from "next/dist/server/api-utils";
+import { user } from "../api/auth/[...nextauth]/route";
 
 export const connectToDatabase = async () => {
   try {
@@ -11,9 +12,11 @@ export const connectToDatabase = async () => {
 };
 
 type InputsPutSignup = {
+  id?: string
   name: string;
   email: string;
   password: string;
+  address: string;
 };
 
 type InputsPutLogin = {
@@ -28,6 +31,7 @@ export async function registerNewUser(inputData: InputsPutSignup) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(inputData),
+    
   });
 
   if (!response.ok) {
@@ -46,4 +50,23 @@ export async function loginUser(inputData: InputsPutLogin) {
   });
 
   return res;
+}
+
+
+export async function updateUser(inputData: InputsPutLogin) {
+  const response = await fetch("/api/auth/user", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(inputData),
+    
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to register user");
+  }
+
+  const updatedUser = await response.json();
+  return updatedUser;
 }

@@ -6,9 +6,7 @@ import { useEffect } from "react";
 
 export default async function LoginSignupPage() {
   // client component in a server component
-  // const session=useSession();
-
-  // add loading state
+  // athis is faster than using const session=useSession();
   const session = await getServerSession();
   if (session) {
     redirect("/dashboard");
