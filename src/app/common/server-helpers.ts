@@ -47,6 +47,7 @@ export async function loginUser(inputData: InputsPutLogin) {
     email: inputData.email,
     password: inputData.password,
     redirect: false,
+    
   });
 
   return res;

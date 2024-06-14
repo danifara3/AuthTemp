@@ -5,6 +5,7 @@ import prisma from "../../../../../prisma/prismaUtil";
 import { connectToDatabase } from "@/app/common/server-helpers";
 import bcrypt from "bcrypt";
 import { JWT } from "next-auth/jwt";
+import { AdapterUser } from "next-auth/adapters";
 
 // the options are imported
 // const handler = NextAuth(AuthOptions);
@@ -79,19 +80,43 @@ export const AuthOptions: NextAuthOptions = {
   // to get more data in your session
 
   callbacks: {
-    async jwt({ token, user, session,trigger }) {
+     async  jwt({ token, user, session, trigger }: { token: JWT, user?: any, session?: any, trigger?: string }) {
       console.log("jwt callback", { token, user, session });
-     if(trigger === "update"&& session?.name){
-      token.name = session.name;
-     }
+    
+      // If the session is updated with a name, update the token
+      if (trigger === "update" && session?.name) {
+        token.name = session.name;
+      }
+    
+      // If the user is authenticated, extend the token with user information
       if (user) {
         const extendedUser = user as user;
-        return {
+        token = {
           ...token,
           id: extendedUser.id,
           address: extendedUser.address,
         };
       }
+    
+      // Update the database with the token information
+      try {
+        await connectToDatabase();
+        const updatedUser = await prisma.user.update({
+          where: {
+            id: token.id as string,
+          },
+          data: {
+            name: token.name as string,
+           
+          },
+        });
+        console.log("Updated user:", updatedUser);
+      } catch (error) {
+        console.error("Error updating user:", error);
+      } finally {
+        await prisma.$disconnect();
+      }
+    
       return token;
     },
     async session({ session, token, user }) {

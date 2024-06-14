@@ -15,6 +15,7 @@ export default function MyStory() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   // =======================
@@ -39,6 +40,7 @@ export default function MyStory() {
       setMessage("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
+      reset();
     }
   };
 
@@ -63,7 +65,7 @@ export default function MyStory() {
               type="text"
               name="name"
               placeholder="user new name"
-              required
+              // required
             />
           </div>
         </div>

@@ -8,7 +8,7 @@ import {
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { loginUser, registerNewUser } from "@/app/common/server-helpers";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
@@ -24,6 +24,7 @@ export default function LoginForm() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const onSubmit: SubmitHandler<any> = async (data) => {
@@ -36,7 +37,7 @@ export default function LoginForm() {
         if (user?.ok) {
           setMessage("Logged in successfully");
           console.log("userlogged in:", user);
-          router.push("/dashboard");
+          // router.push("/dashboard");
           router.refresh();
         }
       } catch (error) {
@@ -49,13 +50,13 @@ export default function LoginForm() {
       try {
         const newUser = await registerNewUser(data);
         if (newUser) setMessage("Profile Created successfully");
-
         router.push("/loginsignup");
-        router.refresh();
+        setIsLogin(true)
       } catch (error) {
         console.error("Error:", error);
         setMessage("Something went wrong. Please try again.");
       } finally {
+        setIsLogin(true)
         setIsLoading(false);
       }
     }
@@ -95,7 +96,7 @@ export default function LoginForm() {
                   </div>
                 </div>
 
-                <br/>
+                <br />
 
                 <div>
                   <label
@@ -116,7 +117,6 @@ export default function LoginForm() {
                     />
                   </div>
                 </div>
-
               </>
             )}
 

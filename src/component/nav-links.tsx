@@ -5,35 +5,34 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
-// Map of links to display in the side navigation.
-// Depending on the size of the application, this would be stored in a database.
+// Array of links to be displayed in the side navigation
 const links = [
   { name: "Home", href: "/", icon: HomeIcon },
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
   {
-    name: "profile",
+    name: "Profile",
     href: "/dashboard/profile",
-    icon: DocumentDuplicateIcon,
+    icon: UserGroupIcon,
   },
   // { name: "Customers", href: "/dashboard/customers", icon: UserGroupIcon },
 ];
 
 export default function NavLinks() {
   return (
-    <>
+    <div className="flex flex-col space-y-2">
       {links.map((link) => {
         const LinkIcon = link.icon;
         return (
           <Link
             key={link.name}
             href={link.href}
-            className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3"
+            className="flex items-center gap-3 rounded-md bg-gray-50 p-3 text-sm font-medium text-gray-900 hover:bg-sky-100 hover:text-blue-600"
           >
-            <LinkIcon className="w-6" />
-            <p className="hidden md:block">{link.name}</p>
+            <LinkIcon className="w-6 h-6" />
+            <span>{link.name}</span>
           </Link>
         );
       })}
-    </>
+    </div>
   );
 }
