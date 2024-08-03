@@ -1,10 +1,11 @@
-import LoginForm from "@/component/login-form";
+import AppLogo from "@/components/app-logo";
+import LoginForm from "@/components/login-form";
 import { getServerSession } from "next-auth";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 
-export default async function LoginSignupPage() {
+export default async function authPage() {
   // client component in a server component
   // athis is faster than using const session=useSession();
   const session = await getServerSession();
@@ -17,7 +18,7 @@ export default async function LoginSignupPage() {
       <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
         <div className="flex h-20 w-full  items-end rounded-lg p-3 md:h-36">
           <div className="w-32 text-white md:w-36  mx-auto">
-            {/* <AppLogo /> */}
+            <AppLogo />
           </div>
         </div>
         <LoginForm />

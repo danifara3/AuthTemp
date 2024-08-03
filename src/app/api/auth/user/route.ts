@@ -1,7 +1,8 @@
 import { connectToDatabase } from "@/app/common/server-helpers";
 import prisma from "../../../../../prisma/prismaUtil";
 import { NextResponse } from "next/server";
-import { user } from "../[...nextauth]/route";
+import { user } from "../../utils/AuthOptions";
+
 
 export const GET = async () => {
   try {

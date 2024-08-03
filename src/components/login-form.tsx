@@ -50,7 +50,7 @@ export default function LoginForm() {
       try {
         const newUser = await registerNewUser(data);
         if (newUser) setMessage("Profile Created successfully");
-        router.push("/loginsignup");
+        router.push("/auth");
         setIsLogin(true)
       } catch (error) {
         console.error("Error:", error);

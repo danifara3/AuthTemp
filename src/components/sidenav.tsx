@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import NavLinks from "@/component/nav-links";
+import NavLinks from "@/components/nav-links";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";

@@ -35,7 +35,7 @@ export default function HomeBlog() {
         )}
         {status === "unauthenticated" && (
           <>
-            <Link href={"/loginsignup"}>Login or Signup </Link>
+            <Link href={"/auth"}>Login or Signup </Link>
           </>
         )}
       </div>

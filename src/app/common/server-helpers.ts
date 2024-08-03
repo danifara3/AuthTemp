@@ -1,7 +1,6 @@
+
 import { signIn } from "next-auth/react";
 import prisma from "../../../prisma/prismaUtil";
-import { redirect } from "next/dist/server/api-utils";
-import { user } from "../api/auth/[...nextauth]/route";
 
 export const connectToDatabase = async () => {
   try {
